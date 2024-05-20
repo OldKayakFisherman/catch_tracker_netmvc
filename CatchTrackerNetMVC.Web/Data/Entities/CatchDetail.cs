@@ -1,6 +1,3 @@
-
-using System.Collections;
-using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -25,6 +22,7 @@ public class CatchDetail
     public DateTime CatchDate{ get; set; }
     
     [Column("species")] 
+    [MaxLength(50)]
     public string Species{ get; set; }
 
     [Column("weight")] 
@@ -37,24 +35,29 @@ public class CatchDetail
     public double WaterDepth { get; set; }
 
     [Column("sky_conditions")] 
+    [MaxLength(100)]
     public string? SkyConditions{ get; set; }
     
     [Column("air_temperature")] 
     public double AirTemperature { get; set; }
 
     [Column("terminal_tackle")] 
+    [MaxLength(1000)]
     public string? TerminalTackle{ get; set; }
     
     [Column("technique")] 
+    [MaxLength(1000)]
     public string? Technique { get; set; }
     
     [Column("bait")] 
+    [MaxLength(1000)]
     public string? Bait { get; set; }
 
     [Column("rod")] 
+    [MaxLength(1000)]
     public string? Rod { get; set; }
 
-    public Collection<Media>? Media { get; set; }
+    public ICollection<Media>? Media { get; set; } = new List<Media>();
 
     public CatchDetail(double latitude, double longitude, DateTime catchDate, string species)
     {

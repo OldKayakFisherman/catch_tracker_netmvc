@@ -1,0 +1,168 @@
+@model CatchTrackerNetMVC.Web.Models.AddCatchViewModel
+
+
+    <div class="row mt-3">
+
+        <div class="col-4">
+            <!-- Create a map container with id "mapId" -->
+            <div id="mapContainer" style="width: 400px; height: 400px;"></div>
+
+            <div class="mt-5">
+                <label for="formFileMultiple" class="form-label">Catch Media</label>
+                <input class="form-control w-100" type="file" id="formFileMultiple" multiple/>
+            </div>
+        </div>
+        <div class="col-6">
+
+            <datalist id="dlTechniques">
+                <option>Aggressive Jerkbait Retrieve</option>
+                <option>Slow Rolling</option>
+            </datalist>
+
+            <datalist id="dlRods">
+                <option>6'1" Bass Pro Medium Moderate Action Baitcaster with Daiwa Tatula 100 casting reel</option>
+            </datalist>
+
+            <datalist id="dlBaits">
+                <option>Rapala Blue/Purple Jerkbait</option>
+            </datalist>
+
+            <datalist id="dlSpecies">
+                <option>Bass</option>
+                <option>Catfish</option>
+                <option>Crappie</option>
+                <option>Perch</option>
+                <option>Bluegill</option>
+            </datalist>
+
+            <datalist id="dlSkyConditions">
+                <option>Sunny</option>
+                <option>Partly CloudY</option>
+                <option>Overcast</option>
+                <option>Light Rain</option>
+                <option>Heavy Rain</option>
+            </datalist>
+
+            <datalist id="dlTerminalTackle">
+                <option>Snap</option>
+            </datalist>
+
+            <form>
+                <div class="mb-3">
+                    <label for="txtLatitude" class="form-label">Latitude</label>
+                    <input type="text" id="txtLatitude" class="form-control w-25" disabled required>
+                </div>
+                <div class="mb-3">
+                    <label for="txtLongitude" class="form-label">Longitude</label>
+                    <input type="text" id="txtLongitude" class="form-control w-25" disabled required>
+                </div>
+                <div class="mb-3">
+                    <label for="dteDateCaught" class="form-label">Date Caught</label>
+                    <input type="date" id="dteDateCaught" name="dteDateCaught" class="form-control" required/>
+                </div>
+                <div class="mb-3">
+                    <label for="species" class="form-label">Species</label>
+                    <input list="dlSpecies" id="txtSpecies" name="txtSpecies" class="form-control" required/>
+                </div>
+                <div class="mb-3">
+                    <label for="weight" class="form-label">Weight</label>
+                    <input type="text" id="weight" class="form-control w-25">
+                </div>
+                <div class="mb-3">
+                    <label for="waterTemperature" class="form-label">Water Temperature</label>
+                    <input type="text" id="waterTemperature" class="form-control w-25">
+                </div>
+                <div class="mb-3">
+                    <label for="waterDepth" class="form-label">Water Depth</label>
+                    <input type="text" id="waterDepth" class="form-control w-25">
+                </div>
+                <div class="mb-3">
+                    <label for="skyConditions" class="form-label">Sky Conditions</label>
+                    <input list="dlSkyConditions" id="txtSkyConditions" name="txtSkyConditions" class="form-control"/>
+                </div>
+                <div class="mb-3">
+                    <label for="airTemperature" class="form-label">Air Temperature</label>
+                    <input type="text" id="airTemperature" class="form-control w-25">
+                </div>
+                <div class="mb-3">
+                    <label for="txtTerminalTackle" class="form-label">Terminal Tackle</label>
+                    <input list="dlTerminalTackle" id="txtTerminalTackle" name="txtTerminalTackle" class="form-control"/>
+                </div>
+                <div class="mb-3">
+                    <label for="technique" class="form-label">Technique</label>
+                    <input list="dlTechniques" id="txtTechnique" name="txtTechnique" class="form-control"/>
+                </div>
+                <div class="mb-3">
+                    <label for="dlBait" class="form-label">Bait</label>
+                    <input list="dlBaits" id="txtBait" name="txtBait" class="form-control"/>
+                </div>
+                <div class="mb-3">
+                    <label for="txtRod" class="form-label">Rod</label>
+                    <input list="dlRods" id="txtRod" name="txtRod" class="form-control"/>
+                </div>
+                <!-- Add any additional fields as needed -->
+                <div class="mt-3 mb-5">
+                    <button class="btn btn-secondary">Cancel</button>
+                    <input type="submit" class="btn btn-primary" value="Save">
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+
+
+@section Scripts
+{
+    <script>
+    
+    (function(){
+
+        //Sane Defaults
+        var user_latitude = 38.895;
+        var user_longitude = -77.0366;
+
+        // Function to handle successful geolocation retrieval
+        function handleGeolocation(position) {
+            user_latitude = position.coords.latitude;
+            user_longitude = position.coords.longitude;
+
+        }
+
+        // Function to handle geolocation error
+        function handleGeolocationError(error) {
+            console.error(`Error getting geolocation: ${error.message}`);
+        }
+
+        // Request geolocation on page load
+        window.addEventListener('load', () => {
+            if ('geolocation' in navigator) {
+                navigator.geolocation.getCurrentPosition(handleGeolocation, handleGeolocationError);
+            } else {
+                console.error('Geolocation is not supported in this browser.');
+            }
+        });
+
+        const map = L.map('mapContainer').setView([user_latitude, user_longitude], 10); // Set initial center and zoom level
+
+        // Add a tile layer (you can replace this with your desired map provider)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Event listener for map clicks
+        map.on('click', (e) => {
+            const latitude = e.latlng.lat.toFixed(6);
+            const longitude = e.latlng.lng.toFixed(6);
+
+            // Update input elements
+            document.getElementById('txtLatitude').value = latitude;
+            document.getElementById('txtLongitude').value = longitude;
+        });
+
+    })();
+
+    </script>
+
+}
+

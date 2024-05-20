@@ -9,12 +9,16 @@ As an avid kayak fisherman intimately familiar with the subject matter, I could 
 
     - Secure (Registration, Login, Logout)
     - Feature rich UI (Basic Bootstrap used)
-    - Highly normalized database
+    - Highly normalized database 
     - Fully 508 Compliant
+    - Does not use async data methods due to [sqlite implementation](https://learn.microsoft.com/en-us/dotnet/standard/data/sqlite/async)
 
 ### Application Improvements
     - Implement User Security (Registration, Login, Logout, Session Handling, Route Gaurds)
     - User Experience Engineering
     - Database normalization, postgresql migration
     - Improve 508 Compliance 
+
+### Overall comments
+    - 
 

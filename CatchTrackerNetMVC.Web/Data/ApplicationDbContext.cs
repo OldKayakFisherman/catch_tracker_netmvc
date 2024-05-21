@@ -22,5 +22,6 @@ public class ApplicationDbContext: DbContext
 
         builder.Entity<SearchIndex>()
             .HasOne<CatchDetail>(s => s.CatchDetail);
+                
     }
 }

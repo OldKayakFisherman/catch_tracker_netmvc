@@ -13,6 +13,7 @@ public static class TestDataHelper
         IList<CatchDetail> catchDetails = new List<CatchDetail>();
 
         var techniqueList = new[] { "Aggressive Jerkbait Retrieve", "Texas Rig", "Slow Rolling" };
+        var terminalTackleList = new[] { "Snap Swivel", "5/0 Worm Hook" };
         var speciesList = new[] { "Bass", "Perch", "Crappie", "Catfish", "Snakehead" };
         var skyConditionsList = new[] { "Cloudy", "Sunny", "Partly Cloudy", "Light Rain" };
         var baitList = new[]
@@ -51,13 +52,26 @@ public static class TestDataHelper
                 SkyConditions = faker.Random.ArrayElements(skyConditionsList, 1).First(),
                 Technique = faker.Random.ArrayElements(techniqueList, 1).First(),
                 WaterDepth = faker.Random.Double(),
-                
+                TerminalTackle = faker.Random.ArrayElements(terminalTackleList, 1).First(),
+                WaterTemperature = faker.Random.Double()
             };
+            
+            catchDetail.Media.Add(
+                new Media()
+                {
+                    Extension = faker.System.FileExt(),
+                    Filename = faker.System.FileName(),
+                    FileSize = faker.Random.Int(),
+                    MimeType = faker.System.FileType(),
+                    UploadDate = faker.Date.Past()
+                }
+            );
+            
+            catchDetails.Add(catchDetail);
+            
         }
-        
-        
-        
-        
-        
+
+        return catchDetails;
+
     }
 }

@@ -35,7 +35,7 @@ public static class TestDataHelper
             var latitude = faker.Address.Latitude();
             var longitude = faker.Address.Longitude();
             var catchDate = faker.Date.Past();
-            var species = faker.Random.ArrayElements(baitList, 1).First();
+            var species = faker.Random.ArrayElements(speciesList, 1).First();
             
             var catchDetail = new CatchDetail
             (

@@ -40,8 +40,8 @@ public class CatchRepository
     public IList<string> GetUniqueTerminalTackle()
     {
         return _ctx.CatchDetails
-            .Where(c => c.Technique != null)
-            .Select(t => t.Technique)
+            .Where(c => c.TerminalTackle != null)
+            .Select(t => t.TerminalTackle)
             .Distinct()!
             .ToList<string>();
     }

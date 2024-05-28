@@ -1,20 +1,37 @@
 using CatchTrackerNetMVC.Web.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using CatchTrackerNetMVC.Web.Data.Repositories; 
 
 namespace CatchTrackerNetMVC.Web.Controllers;
 
 public class CatchController: Controller
 {
+    private readonly CatchRepository _catchRepository;
+    
+    public CatchController(CatchRepository catchRepository)
+    {
+        _catchRepository = catchRepository;
+    }
+    
     [HttpGet][HttpPost]
     public IActionResult Add(AddCatchViewModel? model)
     {
-        if (model == null || !ModelState.IsValid)
+        if (model == null)
         {
             return View();
         }
-
-        return View();
+        else
+        {
+            if (ModelState.IsValid)
+            {
+                //Save the model
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return View(model);
+            }
+        }
     }
     
 }

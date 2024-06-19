@@ -1,11 +1,12 @@
 using CatchTrackerNetMVC.Web.Data.Entities;
 using CatchTrackerNetMVC.Web.Data.Repositories;
 
-namespace CatchTrackerNetMVC.Web.Tests.Data.Respository;
+namespace CatchTrackerNetMVC.Web.Tests.Data.Repositories;
 
+[TestFixture]
 public class LookupRepositoryTests
 {
-        [TestCase]
+    [TestCase]
     public void TestGetUniqueTechniques()
     {
         using (var factory = new TestApplicationDbContextFactory())
@@ -53,7 +54,7 @@ public class LookupRepositoryTests
 
                 Assert.IsNotNull(uniqueRecords);
                 Assert.Greater(uniqueRecords.Count, 0);
-                Assert.LessOrEqual(uniqueRecords.Count, 2);
+                Assert.LessOrEqual(uniqueRecords.Count, 3);
 
             }
         }

@@ -13,7 +13,7 @@ public static class TestDataHelper
         IList<CatchDetail> catchDetails = new List<CatchDetail>();
 
         var techniqueList = new[] { "Aggressive Jerkbait Retrieve", "Texas Rig", "Slow Rolling" };
-        var terminalTackleList = new[] { "Snap Swivel", "5/0 Worm Hook" };
+        var terminalTackleList = new[] { "Snap Swivel", "5/0 Worm Hook", "3/16 Tungsten Worm Weight" };
         var speciesList = new[] { "Bass", "Perch", "Crappie", "Catfish", "Snakehead" };
         var skyConditionsList = new[] { "Cloudy", "Sunny", "Partly Cloudy", "Light Rain" };
         var baitList = new[]
@@ -27,7 +27,7 @@ public static class TestDataHelper
         var rodsList = new[]
         {
             "Rod Setup 1",
-            "Rod Setup 2"
+            "Rod Setup 2",
         };
 
         for (var i = 1; i < number; i++)
@@ -55,6 +55,8 @@ public static class TestDataHelper
                 TerminalTackle = faker.Random.ArrayElements(terminalTackleList, 1).First(),
                 WaterTemperature = faker.Random.Double()
             };
+
+            catchDetail.Media = new List<Media>();
             
             catchDetail.Media.Add(
                 new Media()

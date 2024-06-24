@@ -16,6 +16,7 @@ builder.Services.AddControllersWithViews();
 
 //Add Dependent Services
 builder.Services.AddTransient<CatchRepository>();
+builder.Services.AddTransient<StatsRepository>();
 
 var app = builder.Build();
 

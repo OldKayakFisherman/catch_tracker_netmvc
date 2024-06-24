@@ -7,10 +7,15 @@ namespace CatchTrackerNetMVC.Web.Controllers;
 public class CatchController: Controller
 {
     private readonly CatchRepository _catchRepository;
+    private readonly StatsRepository _statsRepository;
     
-    public CatchController(CatchRepository catchRepository)
+    public CatchController(
+        CatchRepository catchRepository,
+        StatsRepository statsRepository
+        )
     {
         _catchRepository = catchRepository;
+        _statsRepository = statsRepository;
     }
     
     [HttpGet][HttpPost]

@@ -17,36 +17,11 @@ public class StatsRepository
     {
         var startDate = new DateTime(DateTime.Now.Year, 1, 1);
         var endDate = new DateTime(DateTime.Now.Year, 1, 1, 23, 59, 59);
-
         
-        /*
-        var query = from ct in this._ctx.CatchDetails
-            group ct by ct.Species into grp
-            select new 
-                {
-                    key = grp.Key,
-                    cnt = grp.Count()
-                }
-        */
-
         return this._ctx.CatchDetails.GroupBy(cd => cd.Species)
             .OrderBy(group => group.Key)
             .Select(group => Tuple.Create(group.Key, group.Count()))
-            .Take(3)
             .ToList();
-
-        /*
-        return _ctx.CatchDetails
-            .Distinct()
-            .GroupBy(x => x.Species)
-            .Select(g => new Tuple<string, int>(
-                g.Key,
-                g.Count()
-            ))
-            .OrderByDescending(g => g.Item2)
-            .Take(3)
-            .ToList();
-        */
     }
     
     //ytd_catch_stats_by_species

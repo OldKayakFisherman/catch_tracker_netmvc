@@ -11,47 +11,93 @@ public class StatsRepository
     {
         _ctx = ctx;
     }
-
-
+    
     public IList<Tuple<string, int>> YtdCatchStatsOverall()
     {
         var startDate = new DateTime(DateTime.Now.Year, 1, 1);
         var endDate = new DateTime(DateTime.Now.Year, 1, 1, 23, 59, 59);
         
-        return this._ctx.CatchDetails.GroupBy(cd => cd.Species)
+        return this._ctx.CatchDetails
+            .Where(cd => cd.CatchDate <= endDate && cd.CatchDate >= startDate)
+            .GroupBy(cd => cd.Species)
             .OrderBy(group => group.Key)
             .Select(group => Tuple.Create(group.Key, group.Count()))
             .ToList();
     }
     
     //ytd_catch_stats_by_species
-    public Tuple<string, int>? YtdCatchStatsBySpecies()
+    public IList<Tuple<string, int>>? YtdCatchStatsBySpecies()
     {
-        return null;
+        var startDate = new DateTime(DateTime.Now.Year, 1, 1);
+        var endDate = new DateTime(DateTime.Now.Year, 1, 1, 23, 59, 59);
+        
+        return this._ctx.CatchDetails
+            .Where(cd => cd.CatchDate <= endDate && cd.CatchDate >= startDate)
+            .GroupBy(cd => cd.Species)
+            .OrderBy(group => group.Key)
+            .Select(group => Tuple.Create(group.Key, group.Count()))
+            .Take(3)
+            .ToList();
     }
     
     //ytd_top_techniques
-    public Tuple<string, int>? YtdCatchStatsTopTechniques()
+    public IList<Tuple<string, int>>? YtdCatchStatsTopTechniques()
     {
-        return null;
+        var startDate = new DateTime(DateTime.Now.Year, 1, 1);
+        var endDate = new DateTime(DateTime.Now.Year, 1, 1, 23, 59, 59);
+        
+        return this._ctx.CatchDetails
+            .Where(cd => cd.Technique != null && (cd.CatchDate <= endDate && cd.CatchDate >= startDate))
+            .GroupBy(cd => cd.Technique)
+            .OrderBy(group => group.Key)
+            .Select(group => Tuple.Create(group.Key, group.Count()))
+            .Take(3)
+            .ToList()!;
     }
     
     //prior_yr_top_techniques
-    public Tuple<string, int>? PriorYrCatchStatsTopTechniques()
+    public IList<Tuple<string, int>>? PriorYrCatchStatsTopTechniques()
     {
-        return null;
+        var startDate = new DateTime((DateTime.Now.Year -1), 1, 1);
+        var endDate = new DateTime((DateTime.Now.Year -1), 1, 1, 23, 59, 59);
+        
+        return this._ctx.CatchDetails
+            .Where(cd => cd.Technique != null && (cd.CatchDate <= endDate && cd.CatchDate >= startDate))
+            .GroupBy(cd => cd.Technique)
+            .OrderBy(group => group.Key)
+            .Select(group => Tuple.Create(group.Key, group.Count()))
+            .Take(3)
+            .ToList()!;
     }
     
     //ytd_top_baits
-    public Tuple<string, int>? YtdCatchStatsTopBaits()
+    public IList<Tuple<string, int>>? YtdCatchStatsTopBaits()
     {
-        return null;
+        var startDate = new DateTime(DateTime.Now.Year, 1, 1);
+        var endDate = new DateTime(DateTime.Now.Year, 1, 1, 23, 59, 59);
+        
+        return this._ctx.CatchDetails
+            .Where(cd => cd.Bait != null && (cd.CatchDate <= endDate && cd.CatchDate >= startDate))
+            .GroupBy(cd => cd.Bait)
+            .OrderBy(group => group.Key)
+            .Select(group => Tuple.Create(group.Key, group.Count()))
+            .Take(3)
+            .ToList()!;
     }
     
     //prior_yr_top_baits
-    public Tuple<string, int>? PriorYrCatchStatsTopBaits()
+    public IList<Tuple<string, int>>? PriorYrCatchStatsTopBaits()
     {
-        return null;
+        var startDate = new DateTime((DateTime.Now.Year -1), 1, 1);
+        var endDate = new DateTime((DateTime.Now.Year -1), 1, 1, 23, 59, 59);
+        
+        return this._ctx.CatchDetails
+            .Where(cd => cd.Technique != null && (cd.CatchDate <= endDate && cd.CatchDate >= startDate))
+            .GroupBy(cd => cd.Technique)
+            .OrderBy(group => group.Key)
+            .Select(group => Tuple.Create(group.Key, group.Count()))
+            .Take(3)
+            .ToList()!;
     }
     
     
